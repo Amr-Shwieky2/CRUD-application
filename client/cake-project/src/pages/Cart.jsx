@@ -1,10 +1,7 @@
-import "../style/about.css";
+import MyCart from "../components/MyCart";
+import "../style/cart.css";
 const Cart = () => {
-  return (
-    <div className="cart">
-      <h1>cart</h1>
-    </div>
-  );
+  return <MyCart />;
 };
 
 export default Cart;

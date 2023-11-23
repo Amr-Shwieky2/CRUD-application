@@ -4,7 +4,9 @@ import "../style/Products.css";
 import { TbCurrencyShekel } from "react-icons/tb";
 import FormEdite from "../components/FormEdite";
 import FormAdd from "../components/FormAdd";
+import { useCart } from "../context/CartContext";
 const Products = () => {
+  const { addToCart } = useCart();
   const [cakes, setCakes] = useState([]);
   //////edit
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -12,17 +14,21 @@ const Products = () => {
   const [selectedCakeId, setSelectedCakeId] = useState(null);
   const [isFormAddVisible, setIsFormAddVisible] = useState(false);
   const baseURL = " https://6516ff2909e3260018ca8e50.mockapi.io/cake";
+  //const [cart, setCart] = useState([]);
   useEffect(() => {
     axios.get(baseURL).then((response) => {
       setCakes(response.data);
     });
   }, []);
-  const handleEditButtonClick = (cakeID) => {
-    setIsModalOpen(true);
-    setEditCakeId(cakeID);
-    setSelectedCakeId(cakeID);
-    console.log("Edit button clicked for cake ID:", cakeID);
-  };
+  // const handleEditButtonClick = (cakeID) => {
+  //   setIsModalOpen(true);
+  //   setEditCakeId(cakeID);
+  //   setSelectedCakeId(cakeID);
+  //   console.log("Edit button clicked for cake ID:", cakeID);
+  // };
+  // const handleAddToCart = (cakeID) => {
+  //   setCart((prevCart) => [...prevCart, cakeID]);
+  // };
   const addProduct = () => {
     setIsFormAddVisible(true);
   };
@@ -64,9 +70,9 @@ const Products = () => {
               </button>
               <button
                 className="btn  mx-center me-2 btn-edit"
-                onClick={() => handleEditButtonClick(cake.id)}
+                onClick={() => addToCart(cake)}
               >
-                Edit
+                Add To Cart
               </button>
             </div>
           </div>

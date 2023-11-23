@@ -7,7 +7,7 @@ import Contact from "./pages/Contact";
 import SharedLayout from "./components/SharedLayout";
 import About from "./pages/About";
 import Cart from "./pages/Cart";
-
+import { CartProvider } from "./context/CartContext";
 function App() {
   const Router = createBrowserRouter([
     {
@@ -39,7 +39,9 @@ function App() {
   ]);
   return (
     <>
-      <RouterProvider router={Router} />
+      <CartProvider>
+        <RouterProvider router={Router} />
+      </CartProvider>
     </>
   );
 }

@@ -1,38 +1,45 @@
+const Order = require("../models/order");
+
 const orderController = {
-  getAllOrders: async (req, res) => {
+  createOrder: async (req, res) => {
     try {
-      const order = await cakes.find();
+      const order = await Order.create(req.body);
       res.status(201).json({
         success: true,
         data: order,
       });
     } catch (error) {
-      res.status(400).json({ success: false });
+      console.error(error);
+      res.status(400).json({ success: false, error: error.message });
     }
   },
 
-  createOrder: async (req, res) => {
+  getAllOrders: async (req, res) => {
     try {
-      console.log(req.body);
-      const order = await cakes.create(req.body);
-      res.status(201).json({
+      const orders = await Order.find();
+      res.status(200).json({
         success: true,
-        data: order,
+        data: orders,
       });
     } catch (error) {
-      res.status(400).json({ success: false });
+      console.error(error);
+      res.status(500).json({ success: false, error: error.message });
     }
   },
 
   getOrderById: async (req, res) => {
     try {
-      const order = await cakes.findById(req.params.id);
-      res.status(201).json({
+      const order = await Order.findById(req.params.id);
+      if (!order) {
+        return res.status(404).json({ success: false, error: "Order not found" });
+      }
+      res.status(200).json({
         success: true,
         data: order,
       });
     } catch (error) {
-      res.status(400).json({ success: false });
+      console.error(error);
+      res.status(500).json({ success: false, error: error.message });
     }
   },
 };

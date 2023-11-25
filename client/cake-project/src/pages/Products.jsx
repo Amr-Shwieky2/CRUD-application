@@ -5,6 +5,8 @@ import { TbCurrencyShekel } from "react-icons/tb";
 import FormEdite from "../components/FormEdite";
 import FormAdd from "../components/FormAdd";
 import { useCart } from "../context/CartContext";
+
+
 const Products = () => {
   const { addToCart } = useCart();
   const [cakes, setCakes] = useState([]);
@@ -13,10 +15,11 @@ const Products = () => {
   const [editCakeId, setEditCakeId] = useState();
   const [selectedCakeId, setSelectedCakeId] = useState(null);
   const [isFormAddVisible, setIsFormAddVisible] = useState(false);
-  const baseURL = " https://6516ff2909e3260018ca8e50.mockapi.io/cake";
+  const baseURL = "http://localhost:5000/cakes";
   //const [cart, setCart] = useState([]);
   useEffect(() => {
     axios.get(baseURL).then((response) => {
+      console.log(response.data);
       setCakes(response.data);
     });
   }, []);
@@ -39,7 +42,6 @@ const Products = () => {
   };
   const renderProducts = () => {
     const rows = [];
-
     for (let i = 0; i < cakes.length; i += 4) {
       const row = [];
       for (let j = i; j < i + 3 && j < cakes.length; j++) {
@@ -84,10 +86,8 @@ const Products = () => {
         </div>
       );
     }
-
     return rows;
   };
-
   return (
     <>
       <div className="product">{renderProducts()}</div>
@@ -106,12 +106,10 @@ const Products = () => {
           add products
         </button>
       </div>
-
       {isFormAddVisible && (
         <FormAdd onClose={() => setIsFormAddVisible(false)} />
       )}
     </>
   );
 };
-
 export default Products;

@@ -4,8 +4,12 @@ const orderController = require("../controllers/orderControllers");
 
 route
   .route("/")
+  .get(orderController.getAllOrders)
   .post(orderController.createOrder);
 
+route
+  .route("/:id")
+  .get(orderController.getOrderById);
 
 
 module.exports = route;
